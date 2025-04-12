@@ -76,9 +76,9 @@ class Maze:
                 to_visit.append((i+1, j))
             if j < self._num_rows-1 and not self._cells[i][j+1]._visited:
                 to_visit.append((i, j+1))
-            if i != 0 and not self._cells[i-1][j]._visited:
+            if i > 0 and not self._cells[i-1][j]._visited:
                 to_visit.append((i-1, j))
-            if j != 0 and not self._cells[i][j-1]._visited:
+            if j > 0 and not self._cells[i][j-1]._visited:
                 to_visit.append((i, j-1))
 
             if len(to_visit) == 0:
@@ -88,18 +88,18 @@ class Maze:
             direction = random.randrange(len(to_visit))
             next = to_visit[direction]
 
-            if next[0] < i:
+            if next[0] == i-1:
                 self._cells[i][j].has_left_wall = False
                 self._cells[i-1][j].has_right_wall = False
-            elif next[0] > i:
+            elif next[0] == i+1:
                 self._cells[i][j].has_right_wall = False
                 self._cells[i+1][j].has_left_wall = False
-            elif next[1] < j:
-                self._cells[i][j].has_bottom_wall = False
-                self._cells[i][j-1].has_top_wall = False
-            elif next[1] > j:
+            elif next[1] == j-1:
                 self._cells[i][j].has_top_wall = False
-                self._cells[i][j+1].has_bottom_wall = False
+                self._cells[i][j-1].has_bottom_wall = False
+            elif next[1] == j+1:
+                self._cells[i][j].has_bottom_wall = False
+                self._cells[i][j+1].has_top_wall = False
             self._break_walls_r(next[0], next[1])
     
     def _reset_cells_visited(self):

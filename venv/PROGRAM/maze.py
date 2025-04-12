@@ -31,6 +31,7 @@ class Maze:
         self._create_cells()
         self._break_entrance_and_exit()
         self._break_walls_r(0, 0)
+        self._reset_cells_visited()
 
     def _create_cells(self):
         for i in range(self._num_cols):
@@ -100,3 +101,16 @@ class Maze:
                 self._cells[i][j].has_top_wall = False
                 self._cells[i][j+1].has_bottom_wall = False
             self._break_walls_r(next[0], next[1])
+    
+    def _reset_cells_visited(self):
+        for i in range(self._num_cols):
+            for j in range(self._num_rows):
+                self._cells[i][j]._visited = False
+    
+    def _check_reset(self):
+        for i in range(self._num_cols):
+            for j in range(self._num_rows):
+                if not self._cells[i][j]._visited:
+                    print("Clear!")
+                else:
+                    print("Uh oh....")
